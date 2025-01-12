@@ -19,7 +19,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class ProductClient {
     @Value("${application.config.product-url}")
     private String productUrl;
-    private final RestTemplate restTemplate;
+    private final RestTemplate restTemplate = new RestTemplate();
+
 
     public List<PurchaseResponse> purchaseProduct(List<PurchaseRequest> request) {
         HttpHeaders headers = new HttpHeaders();
