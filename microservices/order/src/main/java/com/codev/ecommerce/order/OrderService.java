@@ -8,6 +8,8 @@ import com.codev.ecommerce.kafka.OrderProducer;
 import com.codev.ecommerce.order.product.PurchaseRequest;
 import com.codev.ecommerce.orderline.OrderLineRequest;
 import com.codev.ecommerce.orderline.OrderLineService;
+import com.codev.ecommerce.payment.PaymentClient;
+import com.codev.ecommerce.payment.PaymentRequest;
 import com.codev.ecommerce.product.ProductClient;
 import com.codev.ecommerce.product.PurchaseResponse;
 import jakarta.persistence.EntityNotFoundException;
@@ -27,6 +29,7 @@ public class OrderService {
     private final OrderMapper mapper;
     private final OrderLineService orderLineService;
     private final OrderProducer orderProducer;
+    private final PaymentClient paymentClient;
 
     public Integer createOrder(OrderRequest request) {
         // Utilisation d'OpenFeign "paradigme de programmation Déclarative" pour appeler le service client
@@ -48,6 +51,16 @@ public class OrderService {
             );
          }
 
+        PaymentRequest paymentRequest = new PaymentRequest(
+                request.amount(),
+                request.paymentMethod(),
+                order.getId(),
+                request.reference(),
+                customer
+         );
+
+         paymentClient.createPayment(paymentRequest);
+
          orderProducer.sendOrderConfirmation(
                  new OrderConfirmation(
                          request.reference(),
@@ -57,6 +70,8 @@ public class OrderService {
                          purchaseResponses
                  )
          );
+
+
         return order.getId();
     }
 
