@@ -2,14 +2,14 @@ package com.codev.ecommerce.order;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/order")
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/order")
 public class OrderController {
     private final OrderService service;
 

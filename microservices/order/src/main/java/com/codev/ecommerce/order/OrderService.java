@@ -13,9 +13,9 @@ import com.codev.ecommerce.payment.PaymentRequest;
 import com.codev.ecommerce.product.ProductClient;
 import com.codev.ecommerce.product.PurchaseResponse;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 import java.util.stream.Collectors;
