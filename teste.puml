@@ -1,0 +1,52 @@
+@startuml
+
+class Formation {
+    + id : Long
+    + titre : String
+    + description : String
+    + prix : Double
+    + duree : String
+}
+
+class Rubrique {
+    + id : Long
+    + titre : String
+    + description : String
+}
+
+class SousRubrique {
+    + id : Long
+    + titre : String
+    + description : String
+    + parent : SousRubrique
+    + enfants : List<SousRubrique>
+}
+
+class Sommaire {
+    + id : Long
+    + titre : String
+    + contenu : String
+}
+
+class Utilisateur {
+    + id : Long
+    + nom : String
+    + email : String
+    + role : String
+}
+
+class Inscription {
+    + id : Long
+    + dateInscription : Date
+    + statut : String
+}
+
+' Relations
+Formation --> Rubrique : "1..* contient"
+Rubrique --> SousRubrique : "0..* contient"
+SousRubrique --> SousRubrique : "0..* enfants\n0..1 parent"
+Formation --> Sommaire : "1..* a"
+Utilisateur --> Inscription : "1..* inscrit"
+Inscription --> Formation : "1 inscrit à"
+
+@enduml
